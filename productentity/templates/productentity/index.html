@@ -1,0 +1,9 @@
+{% if latest_sku_list %}
+    <ul>
+    {% for sku in latest_sku_list %}
+        <li><a href="{% url 'productentity:detail' sku.skuid %}/">{{ sku.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No sku's are available.</p>
+{% endif %}

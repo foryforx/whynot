@@ -1,0 +1,19 @@
+{% if product %}
+    <ul>
+        <li>{{ product }}</li>
+    </ul>
+{% else %}
+    <p>No sku's are available.</p>
+{% endif %}
+
+<h1>{{ product.title }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'productentity:wishlist' product.skuid %}" method="post">
+    {% csrf_token %}
+    <label for="email">Enter email:</label>
+    <input type="text" name="email" id="email" value="" />
+    
+    <input type="submit" value="Add to Wishlist" />
+</form>
