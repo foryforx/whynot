@@ -30,7 +30,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Productdata.objects.order_by('-created_date')[:5]
+        return Productdata.objects.order_by('-created_date')[:1000]
 
 class DetailView(generic.DetailView):
     model = Productdata

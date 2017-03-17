@@ -1,19 +1,56 @@
-{% if product %}
-    <ul>
-        <li>{{ product }}</li>
-    </ul>
-{% else %}
-    <p>No sku's are available.</p>
-{% endif %}
-
-<h1>{{ product.title }}</h1>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'productentity:wishlist' product.skuid %}" method="post">
-    {% csrf_token %}
-    <label for="email">Enter email:</label>
-    <input type="text" name="email" id="email" value="" />
+<div style="text-align:center; width:100%;font-family: Arial,sans-serif;padding-left: 151px;">
+    <div id="pdp-body" style="width:80%;">
+        {% if product %}
+        <div id="pdp-body" style="float:left; width:100%;text-align:center">
+            <div id="image-section" style="float:left; width:50%;">
+                <img src="{{ product.image_link }}" width="400px" />
+            </div>
+            <div id="content" style="float:left; width:50%;text-align:left">
+                <div id="product-tag" style ="font-size: 12px;">{{ product.product_type }}>{{ product.brand }}>{{ product.google_product_category }}</div>
+                <h1>{{ product.title }}</h1>
+                {% if product.sale_price == string.empty  and  product.sale_price > 0  %}
+                    <div id = "price" style="color:black;font-size: 14px;"><strike>{{ product.price }}</strike></div><div id="final-price" style= "color:red;font-size: 16px;">{{ product.sale_price }}</div>
+                {% else %}
+                    <div id="final-price" style= "color:red;font-size: 16px;">{{ product.price }}</div>
+                {% endif %}
+                
+                <div id="description" style="font-size: 14px;">
+                    <ul>
+                        <li> {{ product.description }}</li>
+                        <li>Gender: {{ product.gender }}</li>
+                        <li>Color: {{ product.color }}</li>
+                        <li>Size: {{ product.size }}</li>
+                        <li>Code: {{ product.model_code }}</li>
+                    </ul>
+                </div>
+                <div>SKU: {{ product.gtin }}</div>
+                    <div id="stock">
+                    {% if product.availability == "in stock" %}
+                        <div id="in-stock" style ="color:green">In Stock</div>
+                    {% else %}
+                        <div id="in-stock" style ="color:red">Out of Stock</div>
+                    {% endif %}
+                    </div>
+                
+            </div>
+        </div>
     
-    <input type="submit" value="Add to Wishlist" />
-</form>
+        {% else %}
+            <p>No sku's are available.</p>
+        {% endif %}
+    
+        <div>
+        <h1>{{ product.title }}</h1>
+        
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        
+        <form action="{% url 'productentity:wishlist' product.skuid %}" method="post">
+            {% csrf_token %}
+            <label for="email">Enter email:</label>
+            <input type="text" name="email" id="email" value="" />
+            
+            <input type="submit" value="Add to Wishlist" />
+        </form>
+        </div>
+    </div>
+</div>
